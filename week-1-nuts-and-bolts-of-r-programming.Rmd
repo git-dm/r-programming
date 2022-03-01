@@ -4,3 +4,84 @@ author: "Gitanjali Mule"
 date: "3/1/2022"
 output: html_document
 ---
+
+
+### Factors
+
+Factors are used to represent categorical data. factors can be unordered or ordered. 
+- Factors are treated specially by modeling functions like lm() and glm() (these are linear models)
+
+- Using factors with labels is better than using integers because factors are self-describing: having a variables that has values "Male" and "Female" is better than a variables that has values 1 and 2. 
+
+Here the factor vector is created using factor function and c() function
+```{r}
+x <- factor(c("yes","no","no","yes","yes"))
+```
+
+to know how many levels are there in the vector we can call a function called levels().
+```{r}
+levels(x)
+```
+or even if we type x the levels will be printed along with the vector
+
+```{r}
+x
+```
+If I want to know the frequency of each label, I can call a function called table on x and it will print out how many yes and no are there in the vector
+```{r}
+table(x)
+```
+So for example in above vector there are 2 no's and 3 yes'.
+
+
+
+ The order of the levels can be set using the levels arguments to factor(). This can be important in linear modeling because the first level is used as the baseline level. This is specifically important if you are having ordered levels in a vector. Example is shown on how to set the order of the level
+ 
+```{r}
+x <- factor(c("yes","no","no","yes"), levels = c("yes","no"))
+```
+ notice, the argument *levels =()* given for the *factor()* function inside the brackets as second argument after *c()*
+
+In the above example, as we have explicitly stated the levels "yes" will be the first level following "no"
+
+Compare the following levels() function and the function we called above on x.
+```{r}
+levels(x)
+```
+
+----------------
+
+### Data Types: Missing Values
+
+Missing values are denoted by **NA** or **NaN** for underlined mathematical operations. 
+
+- *is.na()* is used to test objects if they are **NA**
+- *is.nan()* is use to test for **NaN**
+- **NA** values have a class also, so there are integer NA, character NA etc.
+- A **NaN** value is also **NA** but the converse is not true. We can say NA is NaN. 
+
+```{r}
+x <- c(1,2,NA,10,3)
+x
+```
+```{r}
+is.na(x)
+```
+```{r}
+is.nan(x)
+```
+
+```{r}
+x <- c(2,3,NaN,10,NA)
+x
+```
+
+```{r}
+is.na(x)
+```
+
+```{r}
+is.nan(x)
+```
+
+See the different outputs for NaN function and NA function. 
