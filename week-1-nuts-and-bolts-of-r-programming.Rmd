@@ -85,3 +85,111 @@ is.nan(x)
 ```
 
 See the different outputs for NaN function and NA function. 
+
+----------------
+
+### Data Types: Data Frame
+
+Data frames are used to store tabular data
+
+-  they are represented as a special type of list where **every element of the list has to have the same length**
+
+- Each element of the list can e thought of as a column and the length of each element of the list is the number of rows
+
+- Unlike matrices, data frames can store different classes of objects in each column ( just like lists): matrices must have every element be the same class.
+
+-  Data frames also have a special attribute call *row.names*
+
+-  Data frames are usually created by calling *read.table()* or *read.csv()*
+
+- Can be converted to a matrix by calling *data.matrix()*
+
+Creating data frames
+```{r}
+x <- data.frame(foo=1:6,bar = c(T,T,F,F,F,T))
+```
+Here foo and bar are the names of the columns and each column will have 6 elements in it. As you can see, each column have different data types. foo has numerical data in it while bar has logical data (**T** is short for **TRUE** and **F** is short for **FALSE**)
+```{r}
+x
+```
+Number of rows are:
+```{r}
+nrow(x)
+```
+Number of columns are: 
+```{r}
+ncol(x)
+```
+
+--------------
+
+### Data Types: The Names Attribute
+
+R objects can also have names, which is very useful for writing readable code and self-describing objects
+
+Here I have show few examples of names() function
+
+By default there are no names:
+```{r}
+x <- 1:4
+names(x)
+```
+
+```{r}
+names(x) <- c("a","bcd","ds","xyz")
+```
+
+```{r}
+x
+```
+
+```{r}
+names(x)
+```
+
+```{r}
+y <- data.frame(a = 1:4, b = c("a","b","c","d"))
+```
+
+```{r}
+names(y)
+```
+
+```{r}
+y
+```
+```{r}
+names(y) <- c("first column","second column")
+```
+
+```{r}
+y
+```
+matrices can have names as well 
+```{r}
+m <- matrix(1:4,nrow = 2,ncol=2)
+m
+```
+
+```{r}
+dimnames(m) <- list(c("a","b"),c("c","d"))
+m
+```
+
+----------------------
+
+## Data Types Summary: 
+
+Data Types 
+
+- atomic classes: numeric, logical, character, integer, complex
+
+- vectors, lists
+
+- factors
+
+- missing values
+
+- data frames
+
+- names
