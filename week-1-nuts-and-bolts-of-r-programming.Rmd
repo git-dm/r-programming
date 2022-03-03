@@ -4,8 +4,264 @@ author: "Gitanjali Mule"
 date: "3/1/2022"
 output: html_document
 ---
+# The Basics
+
+From here we are going to start exploring the R as programming language. What makes R a programming language. These are the building blocks of R.
+We are going to learn about R Data types and some basic operations on these data types. 
+All the thing we manipulate in R, all the things we encounter in R are might be called objects. Objects can be of different kinds. Everything R is an object. You will get this context of object as you proceed in the R world. But for now just keeping in mind that everything in R is an object will do. 
+
+## Data Types
+
+### R objects and Attributes.
+
+R has five atomic **classes of objects**, as follows:
+
+- character
+
+- numeric(real numbers)
+
+- integer
+
+- complex
+
+- logical(TRUE/FALSE)
+
+**The most basic Object of R is Vector.**
+
+A vector can only contain the same class. for example, numeric vector can only have numbers in it it can not contain character or logical classes. 
+
+**BUT** The one exception to this is **List**, which is represented as a vector but can contain objects of different classes(indeed, that's usually why we use them)
+
+Empty vector can be created with vector function
+
+```{r}
+x <- vector()
+```
+
+and a vector has three basic arguments
+- class of vector
+
+- type of vector
+
+- length of vector
+
+```{r}
+class(x)
+
+```
+```{r}
+typeof(x)
+
+```
+```{r}
+length(x)
+```
+##### Numbers
+
+ - Numbers in R a generally treated as numeric objects (i.e. double precision real numbers)
+
+ - If you explicitly want an integer, you need to specify the L suffix
+ 
+ - Ex. Entering 1 gives you a numeric object, but entering 1L explicitly gives you an integer. 
+ 
+ - There is also a special number ***Inf*** which represents infinity; e.g. 1/0 is Inf . Inf can be used in ordinary calculations; e.g. 1/ Inf is 0
+ 
+ - The value NaN represents an undefined value ("Not a number") e.g., 0/0 is NaN.
+ 
+ 
 
 
+#### Attributes:
+R objects can have attributes. Not all R objects have attributes but most of the objects in R have attributes. 
+Common types o attributes are as follows:
+
+- names, dimnames
+
+- dimensions (eg. matrices, arrays)
+
+- class
+
+- length
+
+- other user-defined attributes/metadata
+
+Attributes of an object can be accessed using the *attributes()* function
+
+### Vectors and Lists
+
+Vectors can be created using c() function . *c* is basically concatenate things together. for example I can create a vector called x as follows:
+
+```{r}
+x <- c(0.1,0.2) ## numeric
+x
+```
+```{r}
+x <- c(TRUE,TRUE,FALSE) ##logical
+x
+```
+```{r}
+x <- c(T,T,F,F) ##logical
+x
+```
+
+```{r}
+x <- c("a","b") ##character
+x
+```
+
+```{r}
+x <- 1:10 ##integer
+x
+```
+
+```{r}
+x <- c(1+0i,5-10i) ##complex
+x
+```
+
+vector can be created using vector() function aas follows:
+
+```{r}
+x <- vector("numeric",length = 10)
+x
+```
+The most common method to create a vector is by using a **c() function**
+
+#### What happens if we miss objects
+
+we learned that vectors has to have all members of same class but what happens if we missing the classes of objects in vector. Let's figure it out. 
+In most of the cases R will not throw an error but it will perform coercion. examples are shown below:
+
+In this example I passed a character object and a numeric object to form a vector x. 
+```{r}
+x <- c("a",3)
+x
+```
+```{r}
+typeof(x)
+```
+But if we look at the type of x then it shows that the vector is of character type. What happened here is that R coerced the object into the same type. What it did is, it saved the numeric object as character. So it was easy for R to save the *3* as character than saving *a* as numeric. 
+
+Coercion of object in R can become a problem when we are reading a large dataset. If the dataset contains mixed classes of object in same column then numeric can be saved as character and will start throwing errors if we decide to perform mathematical operations on that.
+
+So in the data science process when we will read read dataset into R, confirming the types of each column is important. Even before you start performing any analysis on dataset confirm the classes of the objects are as per you intended it to be.
+
+#### Explicit Coercion
+
+Above we learned R implicitly coerced the object classes to make it of same type in a vector. But sometimes we want to coerce a vector explicitly. The application of explicit coercion will follow in coming blogs, but keeping in this mind we help implement it in future.
+
+So how to explicitly coerce vectors
+
+Here I am creating a vector of sequence from 0 to 6.
+```{r}
+x <- 0:6
+class(x)
+```
+here the class of x is of integer but if I want to corce the vector into numeric class then I can do that by calling a function as followed by the class that i intend to convert into.
+```{r}
+x <- as.numeric(x)
+x
+class(x)
+```
+```{r}
+x <- as.logical(x)
+x
+class(x)
+```
+When I converted the numeric class into logical it become sequence of true and false. In R , 0 is treated as logical false and 1 onwards its logical true. 
+
+
+```{r}
+x <- 0:6
+x <- as.character(x)
+x
+class(x)
+```
+These are were the examples of coercion where it was sensible to coerce a type of vector but what happens when we try to coerce character into number
+
+Nonsensical coercion results in *NAs*
+
+```{r}
+x <- c("a","b")
+x
+```
+```{r}
+x <- as.numeric(x)
+x
+class(x)
+```
+we can see that R did convert the x vector into numeric but it converted the objects into NAs and throw a warning message  *NAs introduced by coercion*
+
+### Lists
+
+List are a special type of vector that can contain elements of different classes. Lists are a very important data type in R and you should get to know them well. List become very handy we want to carry different types of data. 
+
+list can be created using *list()* function. x is a list of different types of objects such as numeric, character, logical, and complex. When i printed out the x, it prints out the list a little differently. The elements of the list are indexed into double brackets. the first element if vector 1. the second element at index 2 is a vector which contains 2.8. Third element in list is character a at intex 3 and so on. 
+```{r}
+x <- list(1,2.8,"a",TRUE, 1+4i)
+x
+```
+
+### Matrices
+
+Matrices are special types of vectors. they are not different or separate class of objects but they are just special types of vectors which have an attribute called *dim()* dimension.
+
+The dimension attribute is itself an integer vector of length 2(nrow, ncol)
+
+matrix can be created using matrix() function. This is not the only way to create matrix but one of the way to create a matrix. 
+
+```{r}
+x <- matrix(nrow = 2, ncol = 3)
+x
+```
+```{r}
+dim(x)
+```
+the first number is number of rows and second number is number of column. 
+```{r}
+attributes(x)
+```
+These are the aspects of matrices.
+
+The matrices are constructed *column-wise*, so entries can be thought of starting in the "upper left" corner and running down the columns. 
+
+for example I am creating a matric for number 1 to 6 with 2 rows and 3 columns. Here you can see that the contruction of matrix starts from 1st column 1st row. so 1 is assigned at the upper left corner. number 2 is assigned to the 2 row of 1st column. and so on. 
+
+```{r}
+m <- matrix(1:6, nrow = 2, ncol = 3)
+m
+```
+
+matrices can also be created directly from vectors by adding a dimension attribute to it, shown as follows:
+
+```{r}
+m <- 1:10
+m
+```
+```{r}
+dim(m) <- c(2,5)
+m
+```
+Here I am assigning a value to the dimension attribute of m of value 2 and 5. which translates into 2 rows and 5 columns. 
+
+So what happening here is I am telling R take this vector m and then add value of 2 and 5 to its dimension attribute, which will make a matrix of 2 rows and 5 columns. 
+
+#### cbind-ing and rbind-ing
+ Another way to create a matrix is by column-binding or row-binding. What it will do is, it will take the number of vectors and bind them together either by column or row to make it matrix. 
+ 
+```{r}
+
+x <- c(1,2,3)
+y <- c(10,11,12)
+```
+ 
+```{r}
+cbind(x,y)
+```
+```{r}
+rbind(x,y)
+```
+ 
 ### Factors
 
 Factors are used to represent categorical data. factors can be unordered or ordered. 
